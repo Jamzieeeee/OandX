@@ -12,8 +12,11 @@ SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('OandX')
 
-results = SHEET.worksheet('Results')
+def enter_username():
+    """
+    Get username from the user
+    """
+    username = input("Please enter a username:")
+    print(f"Welcome {username}")
 
-data = results.get_all_values()
-
-print(data)
+enter_username()
