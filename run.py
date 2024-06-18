@@ -33,21 +33,24 @@ def select_difficulty():
     print("Easy: Chooses moves at random")
     print("Hard: Blocks lines of 2, but still random")
     print("Perfect: Plays perfectly and CANNOT be beaten\n")
-    dif_str = input("Enter difficulty as spelled above: ")
-    if dif_str == "Easy":
-        difficulty = 1
-        print("You have selected 'Easy' difficulty!")
-    elif dif_str == "Hard":
-        difficulty = 2
-        print("You have selected 'Hard' difficulty!")
-    elif dif_str == "Perfect":
-        difficulty = 3
-        print("You have selected 'Perfect' difficulty!")
-    else:
-        raise ValueError(
-            f"{dif_str} is not a valid difficulty!"
-        )
-        dif_str = input("Please enter 'Easy', 'Hard', or 'Perfect': ")
+
+    while True:
+        dif_str = input("Enter difficulty as spelled above: ")
+
+        if dif_str == "Easy":
+            difficulty = 1
+            print("You have selected 'Easy' difficulty!")
+            break
+        elif dif_str == "Hard":
+            difficulty = 2
+            print("You have selected 'Hard' difficulty!")
+            break
+        elif dif_str == "Perfect":
+            difficulty = 3
+            print("You have selected 'Perfect' difficulty!")
+            break
+        else:
+            print(f"{dif_str} is not a valid difficulty!")
 
 
 select_difficulty()
