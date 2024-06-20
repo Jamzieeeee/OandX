@@ -44,7 +44,7 @@ def enter_username():
     """
     clear()
     global username
-    username = input("Please enter a username:")
+    username = input("Please enter a username: ")
     main_menu()
 
 # Go to main menu
@@ -54,7 +54,7 @@ def main_menu():
     """
     clear()
     print(f"Welcome {username} to...\n")
-    sleep(2)
+    sleep(1)
     print("""
      O |   |   
     ---+---+---
@@ -62,7 +62,7 @@ def main_menu():
     ---+---+---
        |   | X 
         \n""")
-    sleep(2)
+    sleep(1)
     print("1 = Start new game")
     sleep(0.5)
     print("2 = Change username")
@@ -100,6 +100,7 @@ def select_difficulty():
     """
     Ask and set game difficulty
     """
+    clear()
     print("Please set your opponent difficulty\n")
     print("1 = Easy: Chooses moves at random")
     print("2 = Hard: Blocks lines of 2, but still random")
@@ -130,7 +131,7 @@ def select_difficulty():
             print(f"{dif_str} is not a valid difficulty!")
 
 
-# Game
+# Game - by kedmundson
 boxes = [ ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ]
 HUMAN = 'X'
 COMPUTER = '0'
@@ -163,7 +164,7 @@ def take_turn(player, turn):
         if player is COMPUTER:
             box = get_computer_move()
         else:
-            box = input('Player %s, type a number from 1-9 to select a box: ' % player)
+            box = input(f'{username}, type a number from 1-9 to select a box: ')
 
             try:
                 box = int(box) - 1 # subtract 1 to sync with boxes[] index numbers
@@ -227,11 +228,44 @@ def play(player, turn):
         result = check_for_win(player, turn)
         if result == 'win':
             print('Game over. %s wins!\n' % player)
+            game_over()
             break
         elif result == 'tie':
             print('Game over. It\'s a tie.\n')
+            game_over()
             break
         turn += 1
         player = switch_player(turn)
+
+
+def game_over():
+    sleep(1)
+    print("1 = Play again")
+    print("2 = Change difficulty")
+    print("3 = Go back to main menu")
+    print("4 = Quit")
+
+    while True:
+        game_over_str = input("Please enter an option: ")
+        
+        if game_over_str == "1":
+            clear()
+            print_board(initial=True)
+            play(first_player, turn)
+            break
+        elif game_over_str == "2":
+            select_difficulty()
+            break
+        elif game_over_str == "3":
+            main_menu()
+            break
+        elif game_over_str == "4":
+            clear()
+            print("Goodbye!")
+            break
+        else:
+            print(f"{game_over_str} is not a valid option")
+            print("You must provide a number between 1 and 4")
+            sleep(1)
 
 start()
