@@ -1,19 +1,6 @@
 from os import system, name
 from time import sleep
 import random
-import gspread
-from google.oauth2.service_account import Credentials
-
-SCOPE = [
-    "https://www.googleapis.com/auth/spreadsheets",
-    "https://www.googleapis.com/auth/drive.file",
-    "https://www.googleapis.com/auth/drive"
-    ]
-
-CREDS = Credentials.from_service_account_file('creds.json')
-SCOPED_CREDS = CREDS.with_scopes(SCOPE)
-GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
-SHEET = GSPREAD_CLIENT.open('OandX')
 
 # define our clear function
 def clear():
@@ -65,13 +52,9 @@ def main_menu():
     sleep(1)
     print("1 = Start new game")
     sleep(0.5)
-    print("2 = Change username")
+    print("2 = Change username\n")
     sleep(0.5)
-    print("3 = ...")
-    sleep(0.5)
-    print("4 = ...")
-    sleep(0.5)
-    print("5 = Quit game")
+    print("3 = Quit game")
     sleep(0.5)
     while True:
         menu_str = input("Please enter an option: ")
@@ -83,16 +66,12 @@ def main_menu():
             enter_username()
             break
         elif menu_str == "3":
-            print("Unavailable")
-        elif menu_str == "4":
-            print("Unavailable")
-        elif menu_str == "5":
             clear()
             print("Goodbye!")
             break
         else:
             print(f"{menu_str} is not a valid option")
-            print("You must provide a number between 1 and 5")
+            print("You must provide a number between 1 and 3")
             sleep(1)
 
 # Select difficulty
