@@ -34,7 +34,15 @@ def enter_username():
     """
     clear()
     global username
-    username = input("Please enter a username: ")
+    while True:
+        username = input("Please enter a username: ")
+        username = username.strip()
+
+        if len(username) < 3 or len(username) > 15:
+            print("Username must be between 3 and 15 characters long")
+            continue
+        else:
+            break
     main_menu()
 
 
@@ -139,7 +147,6 @@ def reset():
     boxes = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ]
     turn = 1
     first_player = HUMAN if random.randint(0, 1) else COMPUTER
-
 
 
 def print_board(initial=False):
