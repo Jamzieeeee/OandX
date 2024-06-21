@@ -2,16 +2,18 @@ from os import system, name
 from time import sleep
 import random
 
+
 # define our clear function
 def clear():
- 
+
     # for windows
     if name == 'nt':
         _ = system('cls')
- 
+
     # for mac and linux(here, os.name is 'posix')
     else:
         _ = system('clear')
+
 
 # Start function
 def start():
@@ -24,6 +26,7 @@ def start():
     sleep(1)
     enter_username()
 
+
 # Get username
 def enter_username():
     """
@@ -34,6 +37,7 @@ def enter_username():
     username = input("Please enter a username: ")
     main_menu()
 
+
 # Go to main menu
 def main_menu():
     """
@@ -43,11 +47,11 @@ def main_menu():
     print(f"Welcome {username} to...\n")
     sleep(1)
     print("""
-     O |   |   
+     O |   |
     ---+---+---
-     a | n | d 
+     a | n | d
     ---+---+---
-       |   | X 
+       |   | X
         \n""")
     sleep(1)
     print("1 = Start new game")
@@ -73,6 +77,7 @@ def main_menu():
             print(f"{menu_str} is not a valid option")
             print("You must provide a number between 1 and 3")
             sleep(1)
+
 
 # Select difficulty
 def select_difficulty():
@@ -117,13 +122,13 @@ def select_difficulty():
 
 
 # Game - by kedmundson
-boxes = [ ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ]
+boxes = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ]
 HUMAN = 'X'
 COMPUTER = '0'
 first_player = HUMAN
 turn = 1
-winning_combos = [  [0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6],
-                    [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6], ]
+winning_combos = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6],
+                  [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6], ]
 
 
 def reset():
@@ -132,28 +137,27 @@ def reset():
     """
     global boxes
     global turn
-    boxes = [ ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ]
+    boxes = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ]
     turn = 1
 
 
-
 def print_board(initial=False):
-    """ 
+    """
     Print the game board. If this is the beginning of the game,
     print out 1-9 in the boxes to show players how to pick a
     box. Otherwise, update each box with X or 0 from boxes[].
     """
     print('''
-             {} | {} | {} 
+             {} | {} | {}
             ---+---+---
              {} | {} | {}
             ---+---+---
-             {} | {} | {} 
+             {} | {} | {}
         '''.format(*([x for x in range(1, 10)] if initial else boxes)))
 
 
 def take_turn(player, turn):
-    """ 
+    """
     Create a loop that keeps asking the current player for
     their input until a valid choice is made.
     """
@@ -161,10 +165,11 @@ def take_turn(player, turn):
         if player is COMPUTER:
             box = get_computer_move()
         else:
-            box = input(f'{username}, type a number from 1-9 to select a box: ')
+            box = input(
+                f'{username}, type a number from 1-9 to select a box: ')
 
             try:
-                box = int(box) - 1 # subtract 1 to sync with boxes[] index numbers
+                box = int(box) - 1  # subtract 1 to sync with index numbers
             except ValueError:
                 # Not an integer
                 print('That\'s not a valid number, try again.\n')
@@ -174,20 +179,21 @@ def take_turn(player, turn):
             print('That number is out of range, try again.\n')
             continue
 
-        if boxes[box] == ' ': # initial value
-            boxes[box] = player # set to value of current player
+        if boxes[box] == ' ':  # initial value
+            boxes[box] = player  # set to value of current player
             break
         else:
             print('That box is already marked, try again.\n')
 
 
 def get_computer_move():
-    """ 
+    """
     Return a random integer from 0 to 8, inclusive, if difficulty = 1
-    Check for 2 in a row for computer and human and return 3rd box if difficulty = 2
+    Check for 2 in a row for computer and human and return 3rd box
+    if difficulty = 2
     """
     if difficulty == 1:
-        return random.randint(0,8)
+        return random.randint(0, 8)
     elif difficulty == 2:
         box = check_for_potential_win(COMPUTER)
         if box != -1:
@@ -195,9 +201,9 @@ def get_computer_move():
         box = check_for_potential_win(HUMAN)
         if box != -1:
             return box
-        return random.randint(0,8)
+        return random.randint(0, 8)
 
-                
+
 def check_for_potential_win(player):
     for combo in winning_combos:
         score = 0
@@ -212,23 +218,23 @@ def check_for_potential_win(player):
 
 
 def switch_player(turn):
-    """ 
+    """
     Switch the player based on how many moves have been made.
-    X starts the game so if this turn # is even, it's 0's turn. 
+    X starts the game so if this turn # is even, it's 0's turn.
     """
     current_player = COMPUTER if turn % 2 == 0 else HUMAN
     return current_player
 
 
 def check_for_win(player, turn):
-    """ 
+    """
     Check for a win (or a tie). For each combo in winning_combos[],
-    count how many of its corresponding squares have the current 
+    count how many of its corresponding squares have the current
     player's mark. If a player's score count reaches 3, return a win.
     If it doesn't, and this is already turn # 9, return a tie. If
     neither, return False so the game continues.
     """
-    if turn > 4: # need at least 5 moves before a win is possible
+    if turn > 4:  # need at least 5 moves before a win is possible
         for combo in winning_combos:
             score = 0
             for index in combo:
@@ -242,7 +248,7 @@ def check_for_win(player, turn):
 
 
 def play(player, turn):
-    """ 
+    """
     Create a loop that keeps the game in play
     until it ends in a win or tie
     """
@@ -274,7 +280,7 @@ def game_over():
 
     while True:
         game_over_str = input("Please enter an option: ")
-        
+
         if game_over_str == "1":
             clear()
             reset()
@@ -295,5 +301,6 @@ def game_over():
             print(f"{game_over_str} is not a valid option")
             print("You must provide a number between 1 and 4")
             sleep(1)
+
 
 start()
