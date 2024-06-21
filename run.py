@@ -35,7 +35,7 @@ def enter_username():
     clear()
     global username
     while True:
-        username = input("Please enter a username: ")
+        username = input("Please enter a username:\n")
         username = username.strip()
 
         if len(username) < 3 or len(username) > 15:
@@ -66,10 +66,10 @@ def main_menu():
     sleep(0.5)
     print("2 = Change username\n")
     sleep(0.5)
-    print("3 = Quit game")
+    print("3 = Quit game\n")
     sleep(0.5)
     while True:
-        menu_str = input("Please enter an option: ")
+        menu_str = input("Please enter an option:\n")
 
         if menu_str == "1":
             select_difficulty()
@@ -101,7 +101,7 @@ def select_difficulty():
     global difficulty
 
     while True:
-        dif_str = input("Enter difficulty number: ")
+        dif_str = input("Enter difficulty number:\n")
 
         if dif_str == "1":
             difficulty = 1
@@ -179,7 +179,7 @@ def take_turn(player, turn):
             box = get_computer_move()
         else:
             box = input(
-                f'{username}, type a number from 1-9 to select a box: ')
+                f'{username}, type a number from 1-9 to select a box:\n')
 
             try:
                 box = int(box) - 1  # subtract 1 to sync with index numbers
@@ -279,6 +279,8 @@ def play(player, turn):
     Create a loop that keeps the game in play
     until it ends in a win or tie
     """
+    print(f"{username}, you are playing as 'X'")
+
     while True:
         take_turn(player, turn)
         print_board()
@@ -303,10 +305,10 @@ def game_over():
     print("1 = Play again")
     print("2 = Change difficulty")
     print("3 = Go back to main menu")
-    print("4 = Quit")
+    print("4 = Quit\n")
 
     while True:
-        game_over_str = input("Please enter an option: ")
+        game_over_str = input("Please enter an option:\n")
 
         if game_over_str == "1":
             clear()
