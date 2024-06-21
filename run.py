@@ -121,24 +121,25 @@ def select_difficulty():
             print(f"{dif_str} is not a valid difficulty!")
 
 
-# Game - by kedmundson
+# Game
 boxes = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ]
 HUMAN = 'X'
 COMPUTER = '0'
-first_player = HUMAN
-turn = 1
-winning_combos = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6],
+WINNING_COMBOS = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6],
                   [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6], ]
 
 
 def reset():
     """
-    Resets game board and turn number
+    Resets game board, turn number and first player
     """
     global boxes
     global turn
+    global first_player
     boxes = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ]
     turn = 1
+    first_player = HUMAN if random.randint(0, 1) else COMPUTER
+
 
 
 def print_board(initial=False):
@@ -182,18 +183,16 @@ def take_turn(player, turn):
         if boxes[box] == ' ':  # initial value
             boxes[box] = player  # set to value of current player
             break
-        else:
+        elif player == HUMAN:
             print('That box is already marked, try again.\n')
 
 
 def get_computer_move():
     """
-    Return a random integer from 0 to 8, inclusive, if difficulty = 1
     Check for 2 in a row for computer and human and return 3rd box
     if difficulty = 2
+    Otherwise return a random integer from 0 to 8, inclusive
     """
-    if difficulty == 1:
-        return random.randint(0, 8)
     if difficulty == 2:
         box = check_for_potential_win(COMPUTER)
         if box != -1:
@@ -201,11 +200,15 @@ def get_computer_move():
         box = check_for_potential_win(HUMAN)
         if box != -1:
             return box
-        return random.randint(0, 8)
+    return random.randint(0, 8)
 
 
 def check_for_potential_win(player):
-    for combo in winning_combos:
+    """
+    Return index of empty square that would complete or block a row,
+    or returns -1 if none are found
+    """
+    for combo in WINNING_COMBOS:
         score = 0
         empty_index = -1
         for index in combo:
@@ -218,25 +221,24 @@ def check_for_potential_win(player):
     return -1
 
 
-def switch_player(turn):
+def switch_player(current_player):
     """
-    Switch the player based on how many moves have been made.
-    X starts the game so if this turn # is even, it's 0's turn.
+    Switch player to computer if current player is human
     """
-    current_player = COMPUTER if turn % 2 == 0 else HUMAN
+    current_player = COMPUTER if current_player == HUMAN else HUMAN
     return current_player
 
 
 def check_for_win(player, turn):
     """
-    Check for a win (or a tie). For each combo in winning_combos[],
+    Check for a win (or a tie). For each combo in WINNING_COMBOS[],
     count how many of its corresponding squares have the current
     player's mark. If a player's score count reaches 3, return a win.
     If it doesn't, and this is already turn # 9, return a tie. If
     neither, return False so the game continues.
     """
     if turn > 4:  # need at least 5 moves before a win is possible
-        for combo in winning_combos:
+        for combo in WINNING_COMBOS:
             score = 0
             for index in combo:
                 if boxes[index] == player:
@@ -266,7 +268,7 @@ def play(player, turn):
             game_over()
             break
         turn += 1
-        player = switch_player(turn)
+        player = switch_player(player)
 
 
 def game_over():
