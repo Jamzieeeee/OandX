@@ -98,7 +98,7 @@ def select_difficulty():
     print("2 = Medium: Completes lines of 2")
     print("3 = Hard: Prioritises centre then corners\n")
     print("""
-Each level adds more complexity to it's decisions on top of the previous
+Each level adds more complexity to its decisions on top of the previous
 \n"""
           )
 
