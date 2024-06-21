@@ -95,8 +95,8 @@ def select_difficulty():
     clear()
     print("Please set your opponent difficulty\n")
     print("1 = Easy: Chooses moves at random")
-    print("2 = Hard: Blocks lines of 2, but still random")
-    print("3 = Perfect: Plays perfectly and CANNOT be beaten\n")
+    print("2 = Medium: Completes lines of 2")
+    print("3 = Hard: Prioritises centre then corners\n")
 
     global difficulty
 
@@ -114,7 +114,7 @@ def select_difficulty():
             break
         elif dif_str == "2":
             difficulty = 2
-            print("You have selected 'Hard' difficulty!")
+            print("You have selected 'Medium' difficulty!")
             sleep(1)
             clear()
             reset()
@@ -123,7 +123,12 @@ def select_difficulty():
             break
         elif dif_str == "3":
             difficulty = 3
-            print("You have selected 'Perfect' difficulty!")
+            print("You have selected 'Hard' difficulty!")
+            sleep(1)
+            clear()
+            reset()
+            print_board(initial=True)
+            play(first_player, turn)
             break
         else:
             print(f"{dif_str} is not a valid difficulty!")
@@ -200,13 +205,25 @@ def get_computer_move():
     if difficulty = 2
     Otherwise return a random integer from 0 to 8, inclusive
     """
-    if difficulty == 2:
+    if difficulty >= 2:
         box = check_for_potential_win(COMPUTER)
         if box != -1:
             return box
         box = check_for_potential_win(HUMAN)
         if box != -1:
             return box
+
+        if difficulty >= 3:
+            # Pick centre
+            if boxes[4] == ' ':
+                return 4
+            # Pick corner
+            corners = [0, 2, 6, 8]
+            random.shuffle(corners)
+            for index in corners:
+                if boxes[index] == ' ':
+                    return index
+
     return random.randint(0, 8)
 
 
