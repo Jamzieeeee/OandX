@@ -194,7 +194,7 @@ def get_computer_move():
     """
     if difficulty == 1:
         return random.randint(0, 8)
-    elif difficulty == 2:
+    if difficulty == 2:
         box = check_for_potential_win(COMPUTER)
         if box != -1:
             return box
@@ -207,14 +207,15 @@ def get_computer_move():
 def check_for_potential_win(player):
     for combo in winning_combos:
         score = 0
+        empty_index = -1
         for index in combo:
-            empty_index = -1
             if boxes[index] == player:
                 score += 1
             elif boxes[index] == ' ':
                 empty_index = index
             if score == 2 and empty_index != -1:
                 return empty_index
+    return -1
 
 
 def switch_player(turn):
