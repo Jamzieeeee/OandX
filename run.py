@@ -102,6 +102,11 @@ def select_difficulty():
         elif dif_str == "2":
             difficulty = 2
             print("You have selected 'Hard' difficulty!")
+            sleep(1)
+            clear()
+            reset()
+            print_board(initial=True)
+            play(first_player, turn)
             break
         elif dif_str == "3":
             difficulty = 3
@@ -152,7 +157,6 @@ def take_turn(player, turn):
     Create a loop that keeps asking the current player for
     their input until a valid choice is made.
     """
-
     while True:
         if player is COMPUTER:
             box = get_computer_move()
@@ -179,10 +183,33 @@ def take_turn(player, turn):
 
 def get_computer_move():
     """ 
-    Return a random integer from 0 to 8, inclusive
+    Return a random integer from 0 to 8, inclusive, if difficulty = 1
+    Check for 2 in a row for computer and human and return 3rd box if difficulty = 2
     """
-    return random.randint(0,8)
-        
+    if difficulty == 1:
+        return random.randint(0,8)
+    elif difficulty == 2:
+        box = check_for_potential_win(COMPUTER)
+        if box != -1:
+            return box
+        box = check_for_potential_win(HUMAN)
+        if box != -1:
+            return box
+        return random.randint(0,8)
+
+                
+def check_for_potential_win(player):
+    for combo in winning_combos:
+        score = 0
+        for index in combo:
+            empty_index = -1
+            if boxes[index] == player:
+                score += 1
+            elif boxes[index] == ' ':
+                empty_index = index
+            if score == 2 and empty_index != -1:
+                return empty_index
+
 
 def switch_player(turn):
     """ 
