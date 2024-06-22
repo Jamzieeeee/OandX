@@ -206,7 +206,8 @@ def take_turn(player, turn):
 def get_computer_move():
     """
     Check for 2 in a row for computer and human and return 3rd box
-    if difficulty = 2
+    if difficulty >= 2
+    Move in centre then corners if difficulty >=3
     Otherwise return a random integer from 0 to 8, inclusive
     """
     if difficulty >= 2:
