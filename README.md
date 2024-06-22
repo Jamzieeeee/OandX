@@ -26,7 +26,7 @@ The winner is the player who gets 3 of their symbol in a row first. If all space
 #### Username Input and Sanitisation
 
 - The user starts the program by setting a username
-- This is then stripted of leading and trailing spaces
+- This is then stripped of leading and trailing spaces
 - The end result is finally required to be between 3 and 15 characters
 
 #### Main Menu
@@ -44,8 +44,8 @@ The winner is the player who gets 3 of their symbol in a row first. If all space
 - The user is able to choose how hard the computer is to play against
 - These levels are:
   - Easy: Chooses moves at random
-  - Medium: Completes lines of 2
-  - Hard: Prioritises centre then 
+  - Medium: Completes or blocks lines of 2
+  - Hard: Prioritises centre then corners
 - Each level adds more complexity to its decisions on top of the previous
 
 ![Difficulty Options](documentation/Difficulty.png)
@@ -68,7 +68,7 @@ The winner is the player who gets 3 of their symbol in a row first. If all space
 
 ## Data Model
 
-I decided to use an 1 dimentional array to represent the board. This was a choice made by the author of the original code I based my design on. 
+I decided to use a one-dimensional array to represent the board. This was a choice made by the author of the original code I based my design on. 
 
 This code only picked computer moves at random. I implemented my additional difficulty levels and randomising the starting player on top of it, as well as fixing some bugs and tidying some functions.
 
@@ -120,7 +120,7 @@ This project was deployed using Code Institute's mock terminal for Heroku
 Game code based on 'Human vs. Computer Tic Tac Toe' by kedmundson
 - https://gist.github.com/kedmundson/58cddc51af1835166b6e
 
-Clear screen in Python using clear from geeksforgeeks.org
+Clear screen in Python using `clear` from geeksforgeeks.org
 - https://www.geeksforgeeks.org/clear-screen-python/
 
 Code Institute for the deployment terminal
